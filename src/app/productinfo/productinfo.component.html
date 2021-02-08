@@ -1,0 +1,34 @@
+<div class="outer-container">
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #805acb;">
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/productlist">Back <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container ">
+  <div class="float-left" style="margin-right: 10px">
+    <img style="height: 350px;width: 600px; margin-top: 20px; box-shadow: 10px 10px 5px grey;" src="{{product.productpicture}}"
+         alt="f">
+  </div>
+  <div class="text-center" style="margin-top: 50px;margin-left: 150px;">
+    <p><b style="font-size: larger;">{{product.productname}} </b> </p>
+    <p><b style="font-size: larger;">Product Details </b> </p>
+    <p style="text-align: justify; margin-left: 15px;"> {{product.productinformation}}</p>
+
+    <h3 style="text-align: left;margin-left: 60%">Cost <span class="badge badge-warning">{{product.productprice}}</span></h3>
+    <h3 style="text-align: left;margin-left: 60%">BasePay <span class="badge badge-warning">{{product.productprice/10}}</span></h3>
+    <form [formGroup]="PaymentForm" (ngSubmit)="navigate(product.numberofproducts,product.productprice)">
+      
+      <h4 style="text-align: left;margin-left: 60%">EMI Period <select class="custom-select" formControlName="numberOfEmis"><option *ngFor="let period of PeriodList"[ngValue]="period">{{period}}Months</option></select></h4>
+      <div *ngIf="!PaymentForm.controls.numberOfEmis?.valid && (PaymentForm.controls.numberOfEmis?.dirty ||PaymentForm.controls.numberOfEmis?.touched)"><p style="color:red">Invalid NumberOfEmis</p></div>
+      <h4 style="text-align: left;margin-left: 60%">Quantity<input type="text" formControlName="quantity" placeholder="Max Available:{{product.numberofproducts}}"></h4>
+      <div *ngIf="!PaymentForm.controls.quantity?.valid && (PaymentForm.controls.quantity?.dirty ||PaymentForm.controls.quantity?.touched)"><p style="color:red">Invalid quantity</p></div>
+  
+      <button style="margin-top: 35px;" type="button" class="btn btn-outline-primary" [disabled]="!PaymentForm.valid" type="submit">Pay Now</button>
+        </form>
+  </div>
+</div>
+</div>
